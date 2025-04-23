@@ -18,18 +18,21 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ type, message, setIsShowMessage }) {
-  const VariantIcon = ICONS_BY_VARIANT[type];
+function Toast({ message, messages, setToastMessages }) {
+  const VariantIcon = ICONS_BY_VARIANT[message.variant];
+
+  function handleRemoveMessage() {
+    const nextArray = messages.filter((m) => m.id !== message.id);
+    setToastMessages(nextArray);
+  }
+
   return (
-    <div className={`${styles.toast} ${styles[type]}`}>
+    <div className={`${styles.toast} ${styles[message.variant]}`}>
       <div className={styles.iconContainer}>
         <VariantIcon size={24} />
       </div>
-      <p className={styles.content}>{message}</p>
-      <button
-        className={styles.closeButton}
-        onClick={() => setIsShowMessage(false)}
-      >
+      <p className={styles.content}>{message.message}</p>
+      <button className={styles.closeButton} onClick={handleRemoveMessage}>
         <X size={24} />
         <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
