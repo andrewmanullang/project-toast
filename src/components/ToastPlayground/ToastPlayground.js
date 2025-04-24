@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import Button from "../Button";
 import ToastShelf from "../ToastShelf/ToastShelf";
@@ -25,20 +25,6 @@ function ToastPlayground() {
     setMessage("");
     setVariantType("notice");
   }
-
-  React.useEffect(() => {
-    function handleClose(event) {
-      if (event.key === "Escape") {
-        setToastMessages([]);
-      }
-    }
-
-    window.addEventListener("keydown", handleClose);
-
-    return () => {
-      window.removeEventListener("keydown", handleClose);
-    };
-  }, []);
 
   return (
     <div className={styles.wrapper}>
