@@ -5,7 +5,7 @@ import styles from "./ToastShelf.module.css";
 import { ToastContext } from "../ToastProvider/ToastProvider";
 
 function ToastShelf() {
-  const { toastMessages } = React.useContext(ToastContext);
+  const { toasts } = React.useContext(ToastContext);
 
   return (
     <ol
@@ -14,11 +14,11 @@ function ToastShelf() {
       aria-label="Notification"
       aria-live="polite"
     >
-      {toastMessages.map((message) => {
+      {toasts.map((toast) => {
         return (
-          <li key={message.id} className={styles.toastWrapper}>
-            <Toast variant={message.variant} id={message.id}>
-              {message.content}
+          <li key={toast.id} className={styles.toastWrapper}>
+            <Toast variant={toast.variant} id={toast.id}>
+              {toast.content}
             </Toast>
           </li>
         );

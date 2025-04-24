@@ -20,18 +20,18 @@ const ICONS_BY_VARIANT = {
 };
 
 function Toast({ variant, children, id }) {
-  const { toastMessages, setToastMessages } = React.useContext(ToastContext);
-  const VariantIcon = ICONS_BY_VARIANT[variant];
+  const { toasts, setToasts } = React.useContext(ToastContext);
+  const Icon = ICONS_BY_VARIANT[variant];
 
-  function handleRemoveMessage() {
-    const nextArray = toastMessages.filter((m) => m.id !== id);
-    setToastMessages(nextArray);
+  function handleDismiss() {
+    const nextToasts = toasts.filter((toast) => toast.id !== id);
+    setToasts(nextToasts);
   }
 
   return (
     <div className={`${styles.toast} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
-        <VariantIcon size={24} />
+        <Icon size={24} />
       </div>
       <p className={styles.content}>
         <VisuallyHidden>{variant} - </VisuallyHidden>
@@ -39,7 +39,7 @@ function Toast({ variant, children, id }) {
       </p>
       <button
         className={styles.closeButton}
-        onClick={handleRemoveMessage}
+        onClick={handleDismiss}
         aria-label="Dismiss message"
         aria-live="off"
       >

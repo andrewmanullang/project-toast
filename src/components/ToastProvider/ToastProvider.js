@@ -4,23 +4,22 @@ import { useEscapeKey } from "../../hooks/use-escape-key";
 export const ToastContext = React.createContext();
 
 function ToastProvider({ children }) {
-  const [variantType, setVariantType] = React.useState("notice");
-  const [toastMessages, setToastMessages] = React.useState([]);
+  const [toasts, setToasts] = React.useState([]);
 
-  const toastContext = {
-    variantType,
-    setVariantType,
-    toastMessages,
-    setToastMessages,
-  };
+  useEscapeKey(() => {
+    setToasts([]);
+  });
 
-  function removeAllMessages() {
-    setToastMessages([]);
-  }
-
-  useEscapeKey(removeAllMessages);
-
-  return <ToastContext value={toastContext}>{children}</ToastContext>;
+  return (
+    <ToastContext
+      value={{
+        toasts,
+        setToasts,
+      }}
+    >
+      {children}
+    </ToastContext>
+  );
 }
 
 export default ToastProvider;

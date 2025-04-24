@@ -9,21 +9,22 @@ const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
   const [message, setMessage] = React.useState("");
-  const { variantType, setVariantType, toastMessages, setToastMessages } =
-    React.useContext(ToastContext);
+  const [variant, setVariant] = React.useState("notice");
+
+  const { toasts, setToasts } = React.useContext(ToastContext);
 
   function handleSubmit(event) {
     event.preventDefault();
-    setToastMessages([
-      ...toastMessages,
+    setToasts([
+      ...toasts,
       {
         id: crypto.randomUUID(),
         content: message,
-        variant: variantType,
+        variant: variant,
       },
     ]);
     setMessage("");
-    setVariantType("notice");
+    setVariant("notice");
   }
 
   return (
@@ -32,12 +33,9 @@ function ToastPlayground() {
         <img alt="Cute toast mascot" src="/toast.png" />
         <h1>Toast Playground</h1>
       </header>
-      {toastMessages.length > 0 && (
-        <ToastShelf
-          messages={toastMessages}
-          setToastMessages={setToastMessages}
-        />
-      )}
+
+      {toasts.length > 0 && <ToastShelf />}
+
       <form className={styles.controlsWrapper} onSubmit={handleSubmit}>
         <div className={styles.row}>
           <label
@@ -60,18 +58,18 @@ function ToastPlayground() {
         <div className={styles.row}>
           <div className={styles.label}>Variant</div>
           <div className={`${styles.inputWrapper} ${styles.radioWrapper}`}>
-            {VARIANT_OPTIONS.map((variant) => {
+            {VARIANT_OPTIONS.map((option) => {
               return (
-                <label key={crypto.randomUUID()} htmlFor={`variant-${variant}`}>
+                <label key={crypto.randomUUID()} htmlFor={`variant-${option}`}>
                   <input
-                    id={`variant-${variant}`}
+                    id={`variant-${option}`}
                     type="radio"
                     name="variant"
-                    value={variant}
-                    checked={variant === variantType}
-                    onChange={(event) => setVariantType(event.target.value)}
+                    value={option}
+                    checked={option === variant}
+                    onChange={(event) => setVariant(event.target.value)}
                   />
-                  {variant}
+                  {option}
                 </label>
               );
             })}
