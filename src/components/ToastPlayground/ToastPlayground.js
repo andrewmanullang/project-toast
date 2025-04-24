@@ -26,6 +26,20 @@ function ToastPlayground() {
     setVariantType("notice");
   }
 
+  React.useEffect(() => {
+    function handleClose(event) {
+      if (event.key === "Escape") {
+        setToastMessages([]);
+      }
+    }
+
+    window.addEventListener("keydown", handleClose);
+
+    return () => {
+      window.removeEventListener("keydown", handleClose);
+    };
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <header>

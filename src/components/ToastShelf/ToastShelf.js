@@ -8,11 +8,15 @@ function ToastShelf() {
   const { toastMessages } = React.useContext(ToastContext);
 
   return (
-    <ol className={styles.wrapper}>
+    <ol
+      className={styles.wrapper}
+      role="region"
+      aria-label="Notification"
+      aria-live="polite"
+    >
       {toastMessages.map((message) => {
         return (
           <li key={message.id} className={styles.toastWrapper}>
-            {message.content}
             <Toast variant={message.variant} id={message.id}>
               {message.content}
             </Toast>
