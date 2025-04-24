@@ -3,13 +3,14 @@ import React, { useEffect } from "react";
 import Button from "../Button";
 import ToastShelf from "../ToastShelf/ToastShelf";
 import styles from "./ToastPlayground.module.css";
+import { ToastContext } from "../ToastProvider/ToastProvider";
 
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
   const [message, setMessage] = React.useState("");
-  const [variantType, setVariantType] = React.useState("notice");
-  const [toastMessages, setToastMessages] = React.useState([]);
+  const { variantType, setVariantType, toastMessages, setToastMessages } =
+    React.useContext(ToastContext);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -17,7 +18,7 @@ function ToastPlayground() {
       ...toastMessages,
       {
         id: crypto.randomUUID(),
-        message,
+        content: message,
         variant: variantType,
       },
     ]);
